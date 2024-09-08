@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="Big">
+        <h1>Library Management System</h1>
+       <header>
+        <div tabs >
+            <div tab1>BookList</div>
+            <div tab2>Search Book</div>
+            <div tab3>Add Book</div>
+        </div>
+       </header>
+       
+       <main>
+       
+        <div searchbox >
+            <div searchboxinner  >
+                <input type="text" id="Search" placeholder="Enter Book Name" searchinput>
+                <button id="Search" searchbutton>Search</button>
+                    <ul searchresult>
+    
+                    </ul>
+        </div>
+           
+        </div>
+
+            <div>
+                <ol class="booklist">
+                
+                </ol>
+            </div>
+          
+
+          <div booktab >
+            <form class="addBook"> 
+
+                <input type="text" class="addinput" id="input_id" name="input_id" placeholder="Title" min="1">
+                <input type="text" class="addinput" id="title"  name="title" placeholder="Author">
+                <input type="text" class="addinput" id="author_name" name="author_name" placeholder="Description">
+                <button addbookbutton>Add Book</button>
+                </form>
+          </div>
+       </main>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
