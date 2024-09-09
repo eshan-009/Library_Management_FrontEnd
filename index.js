@@ -226,11 +226,11 @@ function createListitem(text,id,author,isBorrowed){
         console.log("Event",requiredbook)
         if(requiredbook.isBorrowed===false)
         {
-            borrowBook(id);
+            await borrowBook(id);
         }
         else
         {
-            returnBook(id)
+            await returnBook(id)
         }
         location.reload();
     })
