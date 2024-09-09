@@ -17,7 +17,7 @@ toggle(currentTab);
 // console.log("cu",currentTab);
 var clickedId;
 async function getData () {
-    const data = await fetch(`http://127.0.0.1:3000/api/`);
+    const data = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`);
     const data1 = await data.json();
 
     return data1.book;
@@ -82,7 +82,7 @@ async function addBook(title, author,description){
     }
     else
     {
-      const response = await fetch(`http://127.0.0.1:3000/api/`,{
+      const response = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`,{
         method : "POST",
         body : JSON.stringify({
           
@@ -109,7 +109,7 @@ async function updateBook(id,title, author,description){
     }
     else
     {
-      const response = await fetch(`http://127.0.0.1:3000/api/`,{
+      const response = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`,{
         method : "PUT",
         body : JSON.stringify({
             id:id,
@@ -130,7 +130,7 @@ async function updateBook(id,title, author,description){
 async function borrowBook(id)
 {
 
-       const response = await fetch(`http://127.0.0.1:3000/api/`,{
+       const response = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`,{
         method : "PATCH", 
         body :JSON.stringify({id:id, isBorrowed : true}),
         headers: {
@@ -144,7 +144,7 @@ async function borrowBook(id)
 
 async function returnBook(id)
 {
-    const response = await fetch(`http://127.0.0.1:3000/api/`,{
+    const response = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`,{
         method : "PATCH", 
         body :JSON.stringify({id:id, isBorrowed : false}),
         headers: {
@@ -188,7 +188,7 @@ async function searchBook(title){
                 return item;
             }
         });
-        // console.log("BookData",bookdata)
+     
         if(bookdata)
         {   
             
@@ -237,7 +237,7 @@ function createListitem(text,id,author,isBorrowed){
     deleteButton.addEventListener("click",async(e)=>{
         console.log("Hello")
         e.preventDefault();
-        const response = await fetch(`http://127.0.0.1:3000/api/`,{
+        const response = await fetch(`https://library-management-system-backend-jid6.onrender.com/api/`,{
             method:"DELETE",
             body : JSON.stringify({id:id}),
             headers: {
