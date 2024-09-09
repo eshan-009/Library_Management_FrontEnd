@@ -9,6 +9,9 @@ const addbooktab = document.querySelector("[booktab]")
 const tab1 = document.querySelector("[tab1]");
 const tab2 = document.querySelector("[tab2]");
 const tab3 = document.querySelector("[tab3]");
+const inputTitle = document.querySelector("#title")
+const inputAuthor = document.querySelector("#author_name")
+const inputDescription = document.querySelector("#description")
 const bookFormButton = document.querySelector("[addbookbutton]")
 const library = [];
 let currentTab=tab1;
@@ -75,7 +78,7 @@ tab3.addEventListener("click",()=>{
 
 async function addBook(title, author,description){
    
-    console.log("ADD BOOk START ",title,author,description);
+
     if(!title || !author || !description)
     {
         return alert("Fill All details")
@@ -95,10 +98,20 @@ async function addBook(title, author,description){
           }
        
       })
-      console.log("ADD Book DB response",response.json())
+     
+      if(response.status === 200)
+        {
+            alert("Book Added Successfully");
+        }
+        else
+        {
+            alert("Book Already Exist");
+        }
     }
    
     location.reload();
+   
+  
 }
 async function updateBook(id,title, author,description){
    
@@ -122,10 +135,14 @@ async function updateBook(id,title, author,description){
           }
        
       })
-      console.log("Update Book DB response",response.json())
+
     }
    
     location.reload();
+    alert("Book Updated Successfully");
+    inputTitle.value ="";
+        inputAuthor.value ="";
+        inputDescription.value ="";
 }
 async function borrowBook(id)
 {
@@ -157,7 +174,7 @@ async function returnBook(id)
 }
 async function listAvailableBooks(){
     const librariran = await getData() ;
-    console.log(librariran)
+    // console.log(librariran)
     if(librariran)
     {
         for(item of librariran)
@@ -180,7 +197,7 @@ async function searchBook(title){
         const bookdata = librariran.filter((item)=>{
            
             const bookname = item.title.toLowerCase().split(" ").join("");
-            console.log("Apple",bookname);
+            // console.log("Apple",bookname);
          
             if(bookname.includes(title.toLowerCase().split(" ").join("")))
             {
@@ -204,7 +221,7 @@ async function searchBook(title){
 }
 
 function createListitem(text,id,author,isBorrowed){
-    console.log("Here",id)
+    // console.log("Here",id)
     const listitem = document.createElement("li");
     listitem.classList.add("listitem");
     listitem.innerHTML= `${text} &nbsp  &nbsp &nbsp by ${author} &nbsp&nbsp&nbsp `
@@ -227,12 +244,16 @@ function createListitem(text,id,author,isBorrowed){
         if(requiredbook.isBorrowed===false)
         {
             await borrowBook(id);
+            location.reload();
+            alert("Book Borrowed");
         }
         else
         {
-            await returnBook(id)
+            await returnBook(id);
+            location.reload();
+           alert("Book Returned");
         }
-        location.reload();
+        
     })
     deleteButton.addEventListener("click",async(e)=>{
         console.log("Hello")
@@ -247,18 +268,26 @@ function createListitem(text,id,author,isBorrowed){
         })
        
         location.reload();
+        alert("Book Deleted");
     })
-    editButton.addEventListener("click",(e)=>{
+    editButton.addEventListener("click",async(e)=>{
         e.preventDefault();
         booklist.classList.remove("active");
         addbooktab.classList.add("active");
+        
+        const Data = await getData();
         clickedId = id;
+        const requiredBook = Data.find((item)=>item._id===clickedId)
+        inputTitle.value = requiredBook.title;
+        inputAuthor.value = requiredBook.author;
+        inputDescription.value = requiredBook.description;
+       
         if(Array.from(addbooktab.classList).includes("active"))
             {
                  bookFormButton.innerHTML = "Edit Book";
                  searchresult.innerHTML = ""
             }
-            console.log("Happy",Array.from(addbooktab.classList).includes("active"))
+           
     })
     const parentButton = document.createElement("div");
     parentButton.classList.add("parentButton");
@@ -277,7 +306,7 @@ searchbutton.addEventListener("click",async (e)=>{
     // e.preventDefault();
     const text = searchinput.value;
     let searchdata = await searchBook(text);
-    console.log("Here",searchdata)
+    // console.log("Here",searchdata)
     searchresult.innerHTML=''
     searchdata.map((item)=>listbookitem1(item.title,item._id,item.author,item.isBorrowed)); 
     })
@@ -293,9 +322,9 @@ addbookform.addEventListener("submit",(e)=>{
     e.preventDefault();
   
     const formdata = new FormData(addbookform);
-    let title = formdata.get("input_id");
-    let author = formdata.get("title")
-    let description = formdata.get("author_name");
+    let title = formdata.get("title");
+    let author = formdata.get("author_name")
+    let description = formdata.get("description");
 
   if(bookFormButton.innerHTML === "Edit Book")
   {
