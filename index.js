@@ -13,6 +13,9 @@ const inputTitle = document.querySelector("#title")
 const inputAuthor = document.querySelector("#author_name")
 const inputDescription = document.querySelector("#description")
 const bookFormButton = document.querySelector("[addbookbutton]")
+const loader = document.createElement("p");
+loader.classList.add("loader")
+loader.innerHTML = "LOADING..."
 const library = [];
 let currentTab=tab1;
 toggle(currentTab);
@@ -173,7 +176,9 @@ async function returnBook(id)
     return
 }
 async function listAvailableBooks(){
+      booklist.appendChild(loader);
     const librariran = await getData() ;
+    booklist.removeChild(loader);
     // console.log(librariran)
     if(librariran)
     {

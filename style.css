@@ -181,7 +181,12 @@ border-radius: 2rem;
 .active{
     display: block;
 }
-
+.loader{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media (max-width:900px)
 {
 .listitem{
